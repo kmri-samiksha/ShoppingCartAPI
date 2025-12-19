@@ -16,9 +16,9 @@ namespace ShoppingCart.Domain.Pricing
             {
                 IndividualClient => productType switch
                 {
-                    ProductType.HighEndPhone => 2000,
-                    ProductType.MidRangePhone => 1300,
-                    ProductType.Laptop => 1700,
+                    ProductType.HighEndPhone => 1500,
+                    ProductType.MidRangePhone => 8000,
+                    ProductType.Laptop => 1200,
                     _ => throw new ArgumentOutOfRangeException()
                 },
 
@@ -30,17 +30,17 @@ namespace ShoppingCart.Domain.Pricing
 
         private static decimal GetProfessionalPrice(ProfessionalClient client, ProductType productType)
         {
-            bool highRevenue = client.AnnualRevenue > 15_000_000;
+            bool highRevenue = client.AnnualRevenue > 10_000_000;
 
             return (highRevenue, productType) switch
             {
-                (true, ProductType.HighEndPhone) => 1500,
-                (true, ProductType.MidRangePhone) => 1050,
-                (true, ProductType.Laptop) => 1400,
+                (true, ProductType.HighEndPhone) => 1000,
+                (true, ProductType.MidRangePhone) => 550,
+                (true, ProductType.Laptop) => 900,
 
-                (false, ProductType.HighEndPhone) => 1650,
-                (false, ProductType.MidRangePhone) => 1100,
-                (false, ProductType.Laptop) => 1500,
+                (false, ProductType.HighEndPhone) => 1150,
+                (false, ProductType.MidRangePhone) => 600,
+                (false, ProductType.Laptop) => 1000,
 
                 _ => throw new ArgumentOutOfRangeException()
             };
