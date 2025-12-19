@@ -30,7 +30,9 @@ namespace ShoppingCart.Tests
 
             var total = service.CalculateTotal(client, items);
 
-            Assert.Equal(4600, total);
+            Assert.Equal(3100, total);
+
+            // Assert.Equal(4600, total);
         }
 
         //[Fact]

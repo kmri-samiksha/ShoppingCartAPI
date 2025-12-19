@@ -17,7 +17,7 @@ namespace ShoppingCart.Domain.Pricing
                 IndividualClient => productType switch
                 {
                     ProductType.HighEndPhone => 1500,
-                    ProductType.MidRangePhone => 8000,
+                    ProductType.MidRangePhone => 800,
                     ProductType.Laptop => 1200,
                     _ => throw new ArgumentOutOfRangeException()
                 },

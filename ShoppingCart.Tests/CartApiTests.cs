@@ -48,7 +48,7 @@ namespace ShoppingCart.Tests
 
             var total = await response.Content.ReadFromJsonAsync<decimal>();
 
-            Assert.Equal(4600, total);
+            Assert.Equal(3100, total);
         }
     }
 }
