@@ -21,7 +21,7 @@ namespace ShoppingCart.Infrastructure.Service
             {
                 IndividualClient _ => _options.Individual[productType],
 
-                ProfessionalClient p => p.AnnualRevenue > 10_000_000
+                ProfessionalClient p => p.AnnualRevenue > _options.Professional.ProfessionalRevenueThreshold
                     ? _options.Professional.Above10M[productType]
                     : _options.Professional.Below10M[productType],
 

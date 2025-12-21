@@ -7,5 +7,7 @@ namespace ShoppingCart.Infrastructure.Service
     {
         public Dictionary<ProductType, decimal> Individual { get; set; } = new();
         public ProfessionalPricing Professional { get; set; } = new();
+        
+        
     }
 }

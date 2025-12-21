@@ -59,7 +59,8 @@ namespace ShoppingCart.Tests
                     { ProductType.HighEndPhone, 1150 },
                     { ProductType.MidRangePhone, 600 },
                     { ProductType.Laptop, 1000 }
-                }
+                },
+                        ProfessionalRevenueThreshold= 10000000
                     }
                 });
 
