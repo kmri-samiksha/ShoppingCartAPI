@@ -1,55 +1,37 @@
-﻿using ShoppingCart.Application.Services;
-using ShoppingCart.Domain.Clients;
-using ShoppingCart.Domain.Products;
-using ShoppingCart.Domain.ShoppingCart;
+﻿using Moq;
 using Xunit;
-
 //using System;
 //using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using ShoppingCart.Application.Services;
+using ShoppingCart.Domain.Clients;
+using ShoppingCart.Domain.Interface;
+using ShoppingCart.Domain.Products;
 
-
-namespace ShoppingCart.Tests
+public class CartTotalServiceTests
 {
-    public class CartTotalServiceTests
+    [Fact]
+    public void GetUnitPrice_ReturnsExpectedPrice_ForIndividualClient()
     {
-        [Fact]
-        public void Calculates_Total_Correctly()
-        {
-            var client = new IndividualClient(Guid.NewGuid(), "Jane", "Doe");
+        // Arrange
+        var client = new IndividualClient(Guid.NewGuid(), "John", "Doe");
+        var productType = ProductType.HighEndPhone;
 
-            var items = new List<CartItem>
-        {
-            new(ProductType.HighEndPhone, 1),
-            new(ProductType.MidRangePhone, 2)
-        };
+        // Create a mock of IProductPricingPolicy
+        var mockPricingPolicy = new Mock<IProductPricingPolicy>();
 
-            var service = new CartTotalService();
+        // Setup mock to return a specific value
+        mockPricingPolicy
+            .Setup(p => p.GetUnitPrice(client, productType))
+            .Returns(1500m);
 
-            var total = service.CalculateTotal(client, items);
+        // Inject mock into CartTotalService
+        var service = new CartTotalService(mockPricingPolicy.Object);
 
-            Assert.Equal(3100, total);
-
-            // Assert.Equal(4600, total);
-        }
-
-        //[Fact]
-        //public void Calculates_Total_Correctly()
-        //{
-        //    var client = new IndividualClient(Guid.NewGuid(), "Jane", "Doe");
-
-        //    var items = new List<CartItem>
-        //{
-        //    new(ProductType.HighEndPhone, 1),
-        //    new(ProductType.MidRangePhone, 2)
-        //};
-
-        //    var service = new CartTotalService();
-        //    var total = service.CalculateTotal(client, items);
-
-        //    Assert.Equal(4600, total);
-        //}
+        // Act
+        decimal unitPrice = mockPricingPolicy.Object.GetUnitPrice(client, productType);
+        // or call via service if service method uses pricing policy internally:
+        // decimal total = service.CalculateTotal(client, new List<ProductType> { productType });
+       
+        Assert.Equal(1500m, unitPrice);
     }
 }

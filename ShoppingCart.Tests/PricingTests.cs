@@ -1,11 +1,11 @@
-﻿using ShoppingCart.Domain.Clients;
-using ShoppingCart.Domain.Pricing;
+﻿using Microsoft.Extensions.Options;
+using Moq;
+//using ShoppingCart.Application.Services;
+using ShoppingCart.Domain.Clients;
+//using ShoppingCart.Domain.Interface;
+//using ShoppingCart.Domain.Pricing;
 using ShoppingCart.Domain.Products;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using ShoppingCart.Infrastructure.Service;
 
 namespace ShoppingCart.Tests
 {
@@ -15,23 +15,78 @@ namespace ShoppingCart.Tests
         public class PriceCalculatorTests
         {
             [Fact]
-            public void IndividualClient_Has_Correct_Prices()
+            public void GetUnitPrice_IndividualClient_ReturnsCorrectPrice()
             {
+                // Arrange: create test options with all needed product types
+                var options = Options.Create(new ProductPricingOptions
+                {
+                    Individual = new Dictionary<ProductType, decimal>
+            {
+                { ProductType.HighEndPhone, 2000 },
+                { ProductType.MidRangePhone, 550 }
+            },
+                    Professional = new ProfessionalPricing
+                    {
+                        Above10M = new Dictionary<ProductType, decimal>
+                {
+                    { ProductType.HighEndPhone, 1900 },
+                    { ProductType.MidRangePhone, 500 }
+                },
+                        Below10M = new Dictionary<ProductType, decimal>
+                {
+                    { ProductType.HighEndPhone, 2100 },
+                    { ProductType.MidRangePhone, 600 }
+                }
+                    }
+                });
+
+                var pricingPolicy = new ConfigProductPricingPolicy(options);
+
                 var client = new IndividualClient(Guid.NewGuid(), "John", "Doe");
 
-                var price = PriceCalculator.GetUnitPrice(client, ProductType.HighEndPhone);
+                // Act
+                var highEndPrice = pricingPolicy.GetUnitPrice(client, ProductType.HighEndPhone);
+                var midRangePrice = pricingPolicy.GetUnitPrice(client, ProductType.MidRangePhone);
 
-                Assert.Equal(1500, price);
+                // Assert
+                Assert.Equal(2000, highEndPrice);
+                Assert.Equal(550, midRangePrice);
             }
 
             [Fact]
-            public void Professional_With_High_Revenue_Gets_Discount()
+            public void GetUnitPrice_ProfessionalClient_ReturnsCorrectPrice()
             {
-                var client = new ProfessionalClient(Guid.NewGuid(), "Corp", 15_000_000);
+                var options = Options.Create(new ProductPricingOptions
+                {
+                    Individual = new Dictionary<ProductType, decimal>
+            {
+                { ProductType.HighEndPhone, 2000 },
+                { ProductType.MidRangePhone, 550 }
+            },
+                    Professional = new ProfessionalPricing
+                    {
+                        Above10M = new Dictionary<ProductType, decimal>
+                {
+                    { ProductType.HighEndPhone, 1900 },
+                    { ProductType.MidRangePhone, 500 }
+                },
+                        Below10M = new Dictionary<ProductType, decimal>
+                {
+                    { ProductType.HighEndPhone, 2100 },
+                    { ProductType.MidRangePhone, 600 }
+                }
+                    }
+                });
 
-                var price = PriceCalculator.GetUnitPrice(client, ProductType.Laptop);
+                var pricingPolicy = new ConfigProductPricingPolicy(options);
 
-                Assert.Equal(900, price);
+                var client = new ProfessionalClient(Guid.NewGuid(), "Acme Corp", 15_000_000);
+
+                var highEndPrice = pricingPolicy.GetUnitPrice(client, ProductType.HighEndPhone);
+                var midRangePrice = pricingPolicy.GetUnitPrice(client, ProductType.MidRangePhone);
+
+                Assert.Equal(1900, highEndPrice); // Above10M tier
+                Assert.Equal(500, midRangePrice);
             }
         }
     }

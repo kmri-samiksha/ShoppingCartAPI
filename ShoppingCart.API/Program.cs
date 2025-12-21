@@ -1,56 +1,41 @@
+using ShoppingCart.API;
 using ShoppingCart.Application.Services;
+using ShoppingCart.Domain.Clients;
+using ShoppingCart.Domain.Interface;
+using ShoppingCart.Domain.ShoppingCart;
+using ShoppingCart.Infrastructure.Service;
 
-public class Program
-{
-    public static void Main(string[] args)
-    {
-
-
-
-        var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-
-
-
-
-
-
-builder.Services.AddScoped<CartTotalService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<CartTotalService>();
+builder.Services.AddScoped<IProductPricingPolicy, ConfigProductPricingPolicy>();
+builder.Services.Configure<ProductPricingOptions>(
+    builder.Configuration.GetSection("ProductPricingOptions"));
+
+
+//builder.Services.AddAppDI();
+
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.MapControllers();
-app.Run();
-    }
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
 
-//builder.Services.AddControllers();
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+app.UseAuthorization();
 
-//var app = builder.Build();
+app.MapControllers();
 
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+app.Run();
+public partial class Program { }
 
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-//app.MapControllers();
-
-//app.Run();
