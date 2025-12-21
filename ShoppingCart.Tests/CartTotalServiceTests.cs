@@ -7,11 +7,12 @@ using ShoppingCart.Domain.Products;
 using Microsoft.Extensions.Options;
 using ShoppingCart.Infrastructure.Service;
 using ShoppingCart.Domain.ShoppingCart;
+using Xunit.Abstractions;
 
 public class CartTotalServiceTests
 {
    [Fact]
-    public void GetUnitPrice_ReturnsExpectedPrice_ForIndividualClient()
+    public async Task GetUnitPrice_ReturnsExpectedPrice_ForIndividualClient()
     {
 
         var pricingPolicyMock = new Mock<IProductPricingPolicy>();
@@ -38,7 +39,7 @@ public class CartTotalServiceTests
 
         var service = new CartTotalService(pricingPolicyMock.Object);
 
-        var total = service.CalculateTotal(client, cartItems);
+        var total = await service.CalculateTotalAsync(client, cartItems);
 
         Assert.Equal(6600, total);
 
@@ -53,7 +54,7 @@ public class CartTotalServiceTests
     }
 
     [Fact]
-    public void GetUnitPrice_ReturnsExpectedPrice_ForProfessionalClient_Above10M()
+    public async Task GetUnitPrice_ReturnsExpectedPrice_ForProfessionalClient_Above10M()
     {
        
             var pricingPolicyMock = new Mock<IProductPricingPolicy>();
@@ -81,7 +82,7 @@ public class CartTotalServiceTests
 
             var service = new CartTotalService(pricingPolicyMock.Object);
 
-            var total = service.CalculateTotal(client, cartItems);
+            var total = await service.CalculateTotalAsync(client, cartItems);
 
             Assert.Equal(4550, total);
 
@@ -96,7 +97,7 @@ public class CartTotalServiceTests
     }
 
     [Fact]
-    public void GetUnitPrice_ReturnsExpectedPrice_ForProfessionalClient_Below10M()
+    public async Task GetUnitPrice_ReturnsExpectedPrice_ForProfessionalClient_Below10M()
     {
 
         var pricingPolicyMock = new Mock<IProductPricingPolicy>();
@@ -124,8 +125,7 @@ public class CartTotalServiceTests
 
         var service = new CartTotalService(pricingPolicyMock.Object);
 
-        var total = service.CalculateTotal(client, cartItems);
-
+        var total = await service.CalculateTotalAsync(client, cartItems);
         Assert.Equal(5100, total);
 
         pricingPolicyMock.Verify(

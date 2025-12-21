@@ -1,11 +1,12 @@
-﻿using ShoppingCart.Domain.Clients;
+﻿using ShoppingCart.Application.IServices;
+using ShoppingCart.Domain.Clients;
 using ShoppingCart.Domain.Interface;
 using ShoppingCart.Domain.ShoppingCart;
 
 
 namespace ShoppingCart.Application.Services
 {
-    public sealed class CartTotalService
+    public sealed class CartTotalService: ICartTotalService
     {
 
         private readonly IProductPricingPolicy _pricingPolicy;
@@ -15,7 +16,7 @@ namespace ShoppingCart.Application.Services
             _pricingPolicy = pricingPolicy;
         }
 
-        public decimal CalculateTotal(Client client, IEnumerable<CartItem> items)
+        public async Task<decimal> CalculateTotalAsync(Client client, IEnumerable<CartItem> items)
         {
             decimal total = 0;
 
@@ -24,7 +25,7 @@ namespace ShoppingCart.Application.Services
                 var unitPrice =_pricingPolicy.GetUnitPrice(client, item.ProductType);
                 total += unitPrice * item.Quantity;
             }
-            return total;
+            return await Task.FromResult(total);            
         }
     }
 }

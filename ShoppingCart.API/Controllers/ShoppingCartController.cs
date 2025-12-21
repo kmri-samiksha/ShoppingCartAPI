@@ -20,10 +20,8 @@ namespace ShoppingCart.API.Controllers
         }
 
         [HttpPost("individual/total")]
-        public IActionResult CalculateForIndividual(
-            [FromBody] IndividualCartRequestDto request)
+        public async Task<IActionResult> CalculateForIndividual([FromBody] IndividualCartRequestDto request)
         {
-
             if (request == null)
                 return BadRequest("Request body is required.");
 
@@ -38,14 +36,13 @@ namespace ShoppingCart.API.Controllers
             var items = request.Items.Select(i =>
                 new CartItem(i.ProductType, i.Quantity));
 
-            var total = _service.CalculateTotal(client, items);
-
+            var total = await _service.CalculateTotalAsync(client, items);
+            
             return Ok(total);
         }
 
         [HttpPost("professional/total")]
-        public IActionResult CalculateForProfessional(
-            [FromBody] ProfessionalCartRequestDto request)
+        public async Task<IActionResult> CalculateForProfessional([FromBody] ProfessionalCartRequestDto request)
         {
             if (request == null)
                 return BadRequest("Request body is required.");
@@ -61,8 +58,8 @@ namespace ShoppingCart.API.Controllers
             var items = request.Items.Select(i =>
                 new CartItem(i.ProductType, i.Quantity));
 
-            var total = _service.CalculateTotal(client, items);
-
+            var total = await _service.CalculateTotalAsync(client, items);
+            
             return Ok(total);
         }
     }
