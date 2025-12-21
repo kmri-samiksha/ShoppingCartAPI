@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
+using ShoppingCart.Application.Services;
 using ShoppingCart.Domain.Clients;
 using ShoppingCart.Domain.Products;
+using ShoppingCart.Domain.ShoppingCart;
 using ShoppingCart.Infrastructure.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShoppingCart.Tests.Fixture
 {
@@ -14,8 +11,7 @@ namespace ShoppingCart.Tests.Fixture
     {      
         public ConfigProductPricingPolicy PricingPolicyIndividual { get; }
         public ConfigProductPricingPolicy PricingPolicyProfessional { get; }
-   
-
+       
     public PricingCalculator_TestCase_Fixture()
     {       
         var individualOptions = Options.Create(new ProductPricingOptions
@@ -75,6 +71,53 @@ namespace ShoppingCart.Tests.Fixture
                 new object[] { new ProfessionalClient(Guid.NewGuid(), "Acme Corp", 9_000_000), ProductType.MidRangePhone, 600m },
                 new object[] { new ProfessionalClient(Guid.NewGuid(), "Acme Corp", 9_000_000), ProductType.Laptop, 1000m }
            };
+
+
+
+        public static IEnumerable<object[]> IndividualClientCartTotalTestData =>
+    new List<object[]>
+    {
+        new object[]
+        {
+            new IndividualClient(Guid.NewGuid(), "John", "Doe"),
+            new List<CartItem>
+            {
+                new CartItem(ProductType.HighEndPhone, 2),
+                new CartItem(ProductType.MidRangePhone, 3),
+                new CartItem(ProductType.Laptop, 1)
+            },
+            2*1500 + 3*800 + 1200 // 6600
+        } 
+    };
+
+
+        public static IEnumerable<object[]> ProfessionalClientCartTotalTestData =>
+   new List<object[]>
+   {
+        new object[]
+        {
+            new ProfessionalClient(Guid.NewGuid(), "Acme Corp", 15_000_000),
+            new List<CartItem>
+            {
+                new CartItem(ProductType.HighEndPhone, 1),
+                new CartItem(ProductType.MidRangePhone, 1),
+                new CartItem(ProductType.Laptop, 1)
+            },
+            1000 + 550 + 900 // 2450
+        },
+        new object[]
+        {
+            new ProfessionalClient(Guid.NewGuid(), "Acme Corp", 9_000_000),
+            new List<CartItem>
+            {
+                new CartItem(ProductType.HighEndPhone, 2),
+                new CartItem(ProductType.MidRangePhone, 3),
+                new CartItem(ProductType.Laptop, 1)
+            },
+            2*1150 + 3*600 + 1*1000 // 5100
+        }
+   };
+
     }
 }
 

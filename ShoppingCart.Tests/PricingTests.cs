@@ -18,7 +18,7 @@ namespace ShoppingCart.Tests
 
         [Theory]
         [MemberData(nameof(PricingCalculator_TestCase_Fixture.IndividualClientTestData), MemberType = typeof(PricingCalculator_TestCase_Fixture))]
-        public void GetUnitPrice_IndividualClient_ReturnsCorrectPriceOne(IndividualClient client, ProductType productType, decimal expectedPrice)
+        public void GetUnitPrice_IndividualClient_ReturnsCorrectPrice(IndividualClient client, ProductType productType, decimal expectedPrice)
         {
             var price = _fixture.PricingPolicyIndividual.GetUnitPrice(client, productType);
             Assert.Equal(expectedPrice, price);
@@ -26,7 +26,7 @@ namespace ShoppingCart.Tests
 
         [Theory]
         [MemberData(nameof(PricingCalculator_TestCase_Fixture.ProfessionalClientTestData), MemberType = typeof(PricingCalculator_TestCase_Fixture))]
-        public void GetUnitPrice_ProfessionalClient_ReturnsCorrectPriceOne(ProfessionalClient client, ProductType productType, decimal expectedPrice)
+        public void GetUnitPrice_ProfessionalClient_ReturnsCorrectPrice(ProfessionalClient client, ProductType productType, decimal expectedPrice)
         {
             var price = _fixture.PricingPolicyProfessional.GetUnitPrice(client, productType);
             Assert.Equal(expectedPrice, price);
