@@ -23,6 +23,13 @@ namespace ShoppingCart.API.Controllers
         public IActionResult CalculateForIndividual(
             [FromBody] IndividualCartRequestDto request)
         {
+
+            if (request == null)
+                return BadRequest("Request body is required.");
+
+            if (request.Client == null)
+                return BadRequest("Client information is required.");
+
             var client = new IndividualClient(
                 request.Client.ClientId,
                 request.Client.FirstName,
@@ -40,6 +47,12 @@ namespace ShoppingCart.API.Controllers
         public IActionResult CalculateForProfessional(
             [FromBody] ProfessionalCartRequestDto request)
         {
+            if (request == null)
+                return BadRequest("Request body is required.");
+
+            if (request.Client == null)
+                return BadRequest("Client information is required.");
+
             var client = new ProfessionalClient(
                 request.Client.ClientId,
                 request.Client.CompanyName,
