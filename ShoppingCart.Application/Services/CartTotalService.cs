@@ -1,7 +1,5 @@
 ﻿using ShoppingCart.Domain.Clients;
 using ShoppingCart.Domain.Interface;
-//using ShoppingCart.Domain.Pricing;
-//using ShoppingCart.Domain.Products;
 using ShoppingCart.Domain.ShoppingCart;
 
 

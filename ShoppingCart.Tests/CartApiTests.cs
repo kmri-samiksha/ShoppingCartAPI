@@ -1,13 +1,5 @@
-﻿//using Microsoft.VisualStudio.TestPlatform.TestHost;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-using System.Net.Http.Json;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using System.Net.Http.Json;
 using ShoppingCart.Domain.Products;
-
-
 using Microsoft.AspNetCore.Mvc.Testing;
 using ShoppingCart.API.DTOs;
 using Xunit;

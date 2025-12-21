@@ -1,7 +1,5 @@
 ﻿using Moq;
 using Xunit;
-//using System;
-//using System.Collections.Generic;
 using ShoppingCart.Application.Services;
 using ShoppingCart.Domain.Clients;
 using ShoppingCart.Domain.Interface;

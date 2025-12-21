@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Moq;
-//using ShoppingCart.Application.Services;
 using ShoppingCart.Domain.Clients;
-//using ShoppingCart.Domain.Interface;
-//using ShoppingCart.Domain.Pricing;
 using ShoppingCart.Domain.Products;
 using ShoppingCart.Infrastructure.Service;
 
