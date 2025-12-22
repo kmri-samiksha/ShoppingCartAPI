@@ -6,7 +6,6 @@ namespace ShoppingCart.Domain.ShoppingCart
     {
         public ProductType ProductType { get; }
         public int Quantity { get; }
-
         public CartItem(ProductType productType, int quantity)
         {
             if (quantity <= 0)

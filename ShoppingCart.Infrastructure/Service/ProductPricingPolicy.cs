@@ -9,12 +9,10 @@ namespace ShoppingCart.Infrastructure.Service
     public class ProductPricingPolicy : IProductPricingPolicy
     {
         private readonly ProductPricingOptions _options;
-
         public ProductPricingPolicy(IOptions<ProductPricingOptions> options)
         {
             _options = options.Value;
         }
-
         public decimal GetUnitPrice(Client client, ProductType productType)
         {
             return client switch

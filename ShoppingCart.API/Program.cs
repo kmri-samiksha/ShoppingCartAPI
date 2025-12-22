@@ -1,8 +1,5 @@
-using ShoppingCart.API;
 using ShoppingCart.Application.Services;
-using ShoppingCart.Domain.Clients;
 using ShoppingCart.Domain.Interface;
-using ShoppingCart.Domain.ShoppingCart;
 using ShoppingCart.Infrastructure.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +25,6 @@ builder.Services.Configure<ProductPricingOptions>(
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

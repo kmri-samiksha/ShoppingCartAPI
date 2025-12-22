@@ -5,7 +5,6 @@ namespace ShoppingCart.Domain.Clients
     {
         public string CompanyName { get; }
         public decimal AnnualRevenue { get; }
-
         public ProfessionalClient(Guid id, string companyName, decimal annualRevenue)
             : base(id)
         {
