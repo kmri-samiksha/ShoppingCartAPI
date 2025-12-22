@@ -19,7 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<CartTotalService>();
-builder.Services.AddScoped<IProductPricingPolicy, ConfigProductPricingPolicy>();
+builder.Services.AddScoped<IProductPricingPolicy, ProductPricingPolicy>();
 builder.Services.Configure<ProductPricingOptions>(
     builder.Configuration.GetSection("ProductPricingOptions"));
 

@@ -6,11 +6,11 @@ using ShoppingCart.Domain.Products;
 
 namespace ShoppingCart.Infrastructure.Service
 {
-    public class ConfigProductPricingPolicy : IProductPricingPolicy
+    public class ProductPricingPolicy : IProductPricingPolicy
     {
         private readonly ProductPricingOptions _options;
 
-        public ConfigProductPricingPolicy(IOptions<ProductPricingOptions> options)
+        public ProductPricingPolicy(IOptions<ProductPricingOptions> options)
         {
             _options = options.Value;
         }

@@ -9,12 +9,12 @@ namespace ShoppingCart.Tests.Fixture
 {
     public class PricingCalculator_TestCase_Fixture
     {      
-        public ConfigProductPricingPolicy PricingPolicyIndividual { get; }
-        public ConfigProductPricingPolicy PricingPolicyProfessional { get; }
+        public ProductPricingPolicy PricingPolicyIndividual { get; }
+        public ProductPricingPolicy PricingPolicyProfessional { get; }
        
     public PricingCalculator_TestCase_Fixture()
-    {       
-        var individualOptions = Options.Create(new ProductPricingOptions
+    {          
+            var individualOptions = Options.Create(new ProductPricingOptions
         {
             Individual = new Dictionary<ProductType, decimal>
                 {
@@ -24,7 +24,7 @@ namespace ShoppingCart.Tests.Fixture
                 }
         });
 
-        PricingPolicyIndividual = new ConfigProductPricingPolicy(individualOptions);
+        PricingPolicyIndividual = new ProductPricingPolicy(individualOptions);
 
         // Professional client pricing options
         var professionalOptions = Options.Create(new ProductPricingOptions
@@ -48,7 +48,7 @@ namespace ShoppingCart.Tests.Fixture
             
         });
 
-        PricingPolicyProfessional = new ConfigProductPricingPolicy(professionalOptions);
+        PricingPolicyProfessional = new ProductPricingPolicy(professionalOptions);
     }
 
 
@@ -74,8 +74,7 @@ namespace ShoppingCart.Tests.Fixture
 
 
 
-        public static IEnumerable<object[]> IndividualClientCartTotalTestData =>
-    new List<object[]>
+        public static IEnumerable<object[]> IndividualClientCartTotalTestData => new List<object[]>
     {
         new object[]
         {
@@ -87,12 +86,11 @@ namespace ShoppingCart.Tests.Fixture
                 new CartItem(ProductType.Laptop, 1)
             },
             2*1500 + 3*800 + 1200 // 6600
-        } 
+        }
     };
 
 
-        public static IEnumerable<object[]> ProfessionalClientCartTotalTestData =>
-   new List<object[]>
+        public static IEnumerable<object[]> ProfessionalClientCartTotalTestData => new List<object[]>
    {
         new object[]
         {
