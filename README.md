@@ -8,7 +8,7 @@ This .NET API calculates the total price of items in a shopping cart based on th
 1. Open the solution in Visual Studio or VS Code.
 2. Run the application. The API can be tested via Swagger.
 
-## Steps for API Testing using xUnit Project
+## Steps for API Testing using xUnit Project 
 
 1. Open the project in Visual Studio
 2. Right click on the solution(root folder) and click on Run Tests
